@@ -52,7 +52,7 @@ The application authenticates using a dedicated SQL Login instead of Windows Aut
 
 | | |
 |---|---|
-| ![New Sales](https://github.com/user-attachments/assets/03ef69d1-881d-41c4-82fe-39093854931a) | ![Customers](https://github.com/user-attachments/assets/7bc3c983-6cc0-4117-a253-8b7025f922a5") |
+| ![New Sales](https://github.com/user-attachments/assets/03ef69d1-881d-41c4-82fe-39093854931a) | ![Customers](https://github.com/user-attachments/assets/7bc3c983-6cc0-4117-a253-8b7025f922a5) |
 | **Figure 1. New Sale page** | **Figure 2. Customers page** |
 
 | | |
