@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="logo.png" alt="Tubig Talino Logo" class="brand-logo">
+    <span class="brand-name">Tubig Talino Register</span>
+  </div>
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="sale">New Sale</button>
+    <button class="tab-btn" data-tab="customers">Customers</button>
+    <button class="tab-btn" data-tab="debts">Debts</button>
+    <button class="tab-btn" data-tab="balances">Advance Payments</button>
+    <button class="tab-btn" data-tab="history">History &amp; Points</button>
+  </nav>
+</header>
+
+<main class="content">
+
+  <!-- ===================== NEW SALE ===================== -->
+  <section id="tab-sale" class="tab-panel active">
+    <div class="grid-2">
+      <div class="card">
+        <h2>New sale</h2>
+        <label class="field">
+          <span>Customer</span>
+          <select id="sale-customer"></select>
+        </label>
+        <label class="field">
+          <span>Name on record</span>
+          <input type="text" id="sale-name" placeholder="Name of the person buying">
+        </label>
+        <div class="field-row">
+          <label class="field">
+            <span>Payment</span>
+            <select id="sale-funding">
+              <option value="Cash">Cash</option>
+              <option value="GCash">GCash</option>
+              <option value="Debt">Debt (pay later)</option>
+              <option value="Balance">Advance-payment balance</option>
+            </select>
+          </label>
+          <label class="field checkbox-field">
+            <input type="checkbox" id="sale-shipping">
+            <span>Needs shipping (+₱30)</span>
+          </label>
+        </div>
+        <h3>Items</h3>
+        <div id="sale-lines"></div>
+        <button type="button" class="btn-secondary" id="add-line">+ Add item</button>
+        <div class="totals">
+          <div class="totals-row"><span>Subtotal</span><span id="sale-subtotal" class="mono">₱0.00</span></div>
+          <div class="totals-row"><span>Shipping</span><span id="sale-shipfee" class="mono">₱0.00</span></div>
+          <div class="totals-row total"><span>Total</span><span id="sale-total" class="mono">₱0.00</span></div>
+        </div>
+        <button type="button" class="btn-primary" id="submit-sale">Complete sale</button>
+        <p class="feedback" id="sale-feedback"></p>
+      </div>
+      <div class="card">
+        <h2>Reference</h2>
+        <p class="hint">Prices shown are for the selected customer's segment. Free-promo items are already priced at ₱0. Add them as their own line when a customer has earned one.</p>
+        <table class="price-table" id="price-reference">
+          <thead><tr><th>Item</th><th>Price</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CUSTOMERS ===================== -->
+  <section id="tab-customers" class="tab-panel">
+    <div class="grid-2">
+      <div class="card">
+        <h2>Add a customer</h2>
+        <label class="field"><span>Name</span><input type="text" id="cust-name"></label>
+        <label class="field">
+          <span>Account type</span>
+          <select id="cust-type">
+            <option value="Individual">Individual</option>
+            <option value="Organization">Organization</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Pricing segment</span>
+          <select id="cust-segment">
+            <option value="Regular">Regular</option>
+            <option value="PDAO">PDAO</option>
+          </select>
+        </label>
+        <button type="button" class="btn-primary" id="add-customer">Add customer</button>
+        <p class="feedback" id="customer-feedback"></p>
+      </div>
+      <div class="card">
+        <h2>All customers</h2>
+        <div class="toolbar">
+          <input type="text" id="cust-search" placeholder="Search by name...">
+          <select id="cust-filter-type">
+            <option value="">Type: All</option>
+            <option value="Individual">Individual</option>
+            <option value="Organization">Organization</option>
+          </select>
+          <select id="cust-filter-segment">
+            <option value="">Segment: All</option>
+            <option value="Regular">Regular</option>
+            <option value="PDAO">PDAO</option>
+          </select>
+        </div>
+        <table class="data-table" id="customer-table">
+          <thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Segment</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="pagination" id="customer-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEBTS ===================== -->
+  <section id="tab-debts" class="tab-panel">
+    <div class="card">
+      <h2>Open debts</h2>
+      <div class="toolbar" id="debts-toolbar" style="display:none;">
+        <input type="text" id="debts-search" placeholder="Search by customer name...">
+      </div>
+      <table class="data-table" id="debts-table">
+        <thead><tr><th>Customer</th><th>Amount due</th><th>Incurred</th><th>Days out</th><th>Settle</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="pagination" id="debts-pagination"></div>
+      <p class="feedback" id="debts-feedback"></p>
+    </div>
+  </section>
+
+  <!-- ===================== ADVANCE PAYMENTS ===================== -->
+  <section id="tab-balances" class="tab-panel">
+    <div class="grid-2">
+      <div class="card">
+        <h2>Load an advance payment</h2>
+        <label class="field"><span>Customer</span><select id="deposit-customer"></select></label>
+        <label class="field"><span>Amount (₱)</span><input type="number" id="deposit-amount" min="1" step="1"></label>
+        <label class="field">
+          <span>Channel</span>
+          <select id="deposit-channel"><option>Cash</option><option>GCash</option></select>
+        </label>
+        <button type="button" class="btn-primary" id="submit-deposit">Add deposit</button>
+        <p class="feedback" id="deposit-feedback"></p>
+      </div>
+      <div class="card">
+        <h2>Check current balance</h2>
+        <label class="field"><span>Customer</span><select id="balance-customer"></select></label>
+        <button type="button" class="btn-secondary" id="check-balance">Check balance</button>
+        <p class="balance-display" id="balance-display"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HISTORY & POINTS ===================== -->
+  <section id="tab-history" class="tab-panel">
+    <div class="card">
+      <h2>Recent transactions</h2>
+      <div class="toolbar">
+        <input type="text" id="history-search" placeholder="Search by transaction ID or name...">
+      </div>
+      <table class="data-table" id="history-table">
+        <thead><tr><th>#</th><th>Date</th><th>Customer</th><th>Name on record</th><th>Payment</th><th>Total</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="pagination" id="history-pagination"></div>
+      <p class="feedback" id="history-feedback"></p>
+    </div>
+    <div class="card">
+      <h2>Points by fiscal year</h2>
+      <p class="hint">Slim/Round bought with Cash, GCash, or Debt, plus points from advance-payment deposits. Balance-funded purchases are excluded so the same pesos aren't credited twice. This table is derived from transactions and deposits.</p>
+      <div class="toolbar">
+        <select id="points-year-filter"><option value="">All years</option></select>
+      </div>
+      <table class="data-table" id="points-table">
+        <thead><tr><th>Customer</th><th>FY</th><th>Slim/Round bought</th><th>+ Points (jugs)</th><th>Deposited</th><th>+ Points (deposits)</th><th>Total points</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="pagination" id="points-pagination"></div>
+    </div>
+  </section>
+
+</main>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
