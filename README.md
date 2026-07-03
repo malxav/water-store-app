@@ -52,16 +52,16 @@ The application authenticates using a dedicated SQL Login instead of Windows Aut
 
 | | |
 |---|---|
-| ![Home](placeholder.png) | ![Customers](placeholder.png) |
-| **Figure 1. Home page** | **Figure 2. Customers page** |
+| ![New Sales](https://github.com/user-attachments/assets/03ef69d1-881d-41c4-82fe-39093854931a) | ![Customers](https://github.com/user-attachments/assets/7bc3c983-6cc0-4117-a253-8b7025f922a5") |
+| **Figure 1. New Sale page** | **Figure 2. Customers page** |
 
 | | |
 |---|---|
-| ![Debts](placeholder.png) | ![Advance Payments](placeholder.png) |
+| ![Debts](https://github.com/user-attachments/assets/7437350b-769f-4479-9528-e387624d7d2e) | ![Advance Payments](https://github.com/user-attachments/assets/0c5ea7cd-cf67-4f68-8f64-7203e6533c3c) |
 | **Figure 3. Debts page** | **Figure 4. Advance Payments page** |
 
 <p align="center">
-<img src="images/history-placeholder.png" width="700">
+<img src="https://github.com/user-attachments/assets/5e77910d-75ee-409b-a0f1-85ab61433b4c" width="700">
 </p>
 
 <p align="center">
