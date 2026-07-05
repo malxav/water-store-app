@@ -119,9 +119,17 @@ set TABLE=%~1
 set HEADER=%~2
 echo   - %TABLE%
 echo %HEADER%> "%EXPORT_DIR%\%TABLE%.csv"
-bcp "SELECT * FROM %DB_DATABASE%.dbo.%TABLE%" queryout "%EXPORT_DIR%\%TABLE%_data.tmp" -c -t"," -S %DB_SERVER% -U %DB_USER% -P %DB_PASSWORD% -d %DB_DATABASE% >nul
-type "%EXPORT_DIR%\%TABLE%_data.tmp" >> "%EXPORT_DIR%\%TABLE%.csv" 2>nul
-del "%EXPORT_DIR%\%TABLE%_data.tmp" 2>nul
+
+if "%DB_USER%"=="" (
+    bcp "SELECT * FROM %DB_DATABASE%.dbo.%TABLE%" queryout "%EXPORT_DIR%\%TABLE%_data.tmp" -c -t"," -S %DB_SERVER% -T -d %DB_DATABASE% -u
+) else (
+    bcp "SELECT * FROM %DB_DATABASE%.dbo.%TABLE%" queryout "%EXPORT_DIR%\%TABLE%_data.tmp" -c -t"," -S %DB_SERVER% -U "%DB_USER%" -P "%DB_PASSWORD%" -d %DB_DATABASE% -u
+)
+
+if exist "%EXPORT_DIR%\%TABLE%_data.tmp" (
+    type "%EXPORT_DIR%\%TABLE%_data.tmp" >> "%EXPORT_DIR%\%TABLE%.csv" 2>nul
+    del "%EXPORT_DIR%\%TABLE%_data.tmp" 2>nul
+)
 exit /b
 
 
@@ -130,7 +138,15 @@ set VIEWNAME=%~1
 set HEADER=%~2
 echo   - %VIEWNAME% (report)
 echo %HEADER%> "%EXPORT_DIR%\%VIEWNAME%.csv"
-bcp "SELECT * FROM %DB_DATABASE%.dbo.%VIEWNAME%" queryout "%EXPORT_DIR%\%VIEWNAME%_data.tmp" -c -t"," -S %DB_SERVER% -U %DB_USER% -P %DB_PASSWORD% -d %DB_DATABASE% >nul
-type "%EXPORT_DIR%\%VIEWNAME%_data.tmp" >> "%EXPORT_DIR%\%VIEWNAME%.csv" 2>nul
-del "%EXPORT_DIR%\%VIEWNAME%_data.tmp" 2>nul
+
+if "%DB_USER%"=="" (
+    bcp "SELECT * FROM %DB_DATABASE%.dbo.%VIEWNAME%" queryout "%EXPORT_DIR%\%VIEWNAME%_data.tmp" -c -t"," -S %DB_SERVER% -T -d %DB_DATABASE% -u
+) else (
+    bcp "SELECT * FROM %DB_DATABASE%.dbo.%VIEWNAME%" queryout "%EXPORT_DIR%\%VIEWNAME%_data.tmp" -c -t"," -S %DB_SERVER% -U "%DB_USER%" -P "%DB_PASSWORD%" -d %DB_DATABASE% -u
+)
+
+if exist "%EXPORT_DIR%\%VIEWNAME%_data.tmp" (
+    type "%EXPORT_DIR%\%VIEWNAME%_data.tmp" >> "%EXPORT_DIR%\%VIEWNAME%.csv" 2>nul
+    del "%EXPORT_DIR%\%VIEWNAME%_data.tmp" 2>nul
+)
 exit /b
